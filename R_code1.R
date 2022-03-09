@@ -7,7 +7,7 @@ samplesize <- function(alpha, beta, sigma, delta) {
   return(n)
 }
 
-samplesize(0.05, 0.4, 10, 0.2)
+samplesize(0.05, 0.2, 1, 0.2)
 
 # Sample Size for both arms
 
