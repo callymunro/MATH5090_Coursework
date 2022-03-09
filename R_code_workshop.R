@@ -1,20 +1,20 @@
 # Workshop
-
-rbinom(1, n1, theta0)
-
-y1 <- sim data()
-
-d1 <- decision(y1, n1, delta, lambda, (a0, b0?))
-
-if(d1 = true) {
-  y2 <- sim data(n2)
-  d2 <- decision(y1, n1, y2, n2, delta, lambda)
-  # if decision is true, generate new data?
-  # this leaves us with two decisions we have recorded.
-  # d1 isnt really relevant for our type 1 error rate?
-  # if we wanted our code to give us our overall result
-  # to our trial, what would we want to return?
-}
+# 
+# rbinom(1, n1, theta0)
+# 
+# y1 <- sim data()
+# 
+# d1 <- decision(y1, n1, delta, lambda, (a0, b0?))
+# 
+# if(d1 = true) {
+#   y2 <- sim data(n2)
+#   d2 <- decision(y1, n1, y2, n2, delta, lambda)
+#   # if decision is true, generate new data?
+#   # this leaves us with two decisions we have recorded.
+#   # d1 isnt really relevant for our type 1 error rate?
+#   # if we wanted our code to give us our overall result
+#   # to our trial, what would we want to return?
+# }
 
 
 
@@ -123,3 +123,10 @@ if(d1 = true) {
 # hypothetical designs.
 # of the ones we have considered, these are the best ones.
 
+
+# Why would we use a probability of futility to progress?
+# Just what the authors proposed, this could be something to 
+# review.
+# In the literature, they have justified this in comparison.
+
+# Endpoint is satisfying constraints with a small sample size.
