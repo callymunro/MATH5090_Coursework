@@ -19,7 +19,6 @@
 
 
 
-
 # if we want to say we are only interested in using this design 
 # for a specific prior distribution, we could have a0 and b0
 # included as parameters
@@ -48,7 +47,7 @@
 # intuitively, suggests that if we start with some information,
 # we would need a lower sample size to get the same clarity of data.
 
-# defining type I and type II errors need o be defined through
+# defining type I and type II errors need to be defined through
 # the BOP2 design
 
 #_________________________________________________________
