@@ -117,3 +117,6 @@ Power <- apply(df_acceptable_pairs, 1, Errors_General, a0 = 0.5, b0 = 0.5, n1 = 
 
 # View a table with the acceptable pairs, their expected sample size and the power.
 Full_Data <- cbind(df_acceptable_pairs, Round_Up, Power)
+
+
+
