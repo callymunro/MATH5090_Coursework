@@ -6,8 +6,8 @@ Sample_Size <- function(alpha, beta, delta, theta) {
   return(n)
 }
 
-# Sample_Size(0.05, 0.2, 0.2, 0.5)
-# This gives an estimated sample size for the first arm as n1 = 40
+Sample_Size(0.05, 0.2, 0.2, 0.5)
+# This gives an estimated (rounded) sample size for the first stage as n1 = 40.
 
 # Function to work out the Type I and II errors.
 Errors_General <- function(x, a0, b0, n1, n2, theta) {
@@ -52,15 +52,9 @@ Errors_General <- function(x, a0, b0, n1, n2, theta) {
 }
   
 
-# Working out the Type I and Type II error
-# TypeI_II <- function(x, a0, b0, n1, n2, theta_null, theta_alt) {
-#   return(c(Errors_General(x, a0, b0, n1, n2, theta_null),
-#            1 - Errors_General(x, a0, b0, n1, n2, theta_alt)))
-# }
-
-
 
 # Create a data frame of all possible pairs of gamma and lambda to be considered.
+# We have restricted both to [0, 1].
 gamma <- seq(0.01, 1, 0.05)
 lambda <- seq(0.01, 1, 0.05)
 df <- expand.grid(gamma = gamma, lambda = lambda)
@@ -68,7 +62,7 @@ df <- expand.grid(gamma = gamma, lambda = lambda)
 
 ptm <- proc.time()
 
-#ATTEMPT TO LIST TYPE I AND II ERRORS
+# Calculating the operating characteristics for each pair of tuning parameters.
 Type_I <- apply(df, 1, Errors_General, a0 = 0.5, b0 = 0.5, n1 = 40, n2 = 80, theta = 0.5)
 Type_II <- 1 - (apply(df, 1, Errors_General, a0 = 0.5, b0 = 0.5, n1 = 40, n2 = 80, theta = 0.7))
 
@@ -76,27 +70,26 @@ Type_I_II <- cbind(Type_I, Type_II)
 
 proc.time() - ptm
 
-# Reduce pairs of gamma and lambda to those with acceptable Type I and Type II error
+# Reduce pairs of gamma and lambda to those which satisfy restrictions on
+# Type I AND Type II error.
 acceptable_pairs <- which(Type_I_II[, 1] <= 0.05 & Type_I_II[, 2] <= 0.2)
 
-# Pick out the acceptable pairs of lambda and gamma that satisfy error
-# restrictions.
-
+# To a dataframe.
 df_acceptable_pairs <- df[acceptable_pairs, ]
 
 
 
-# Consider the probability of y1 given theta0
+# Consider the probability of y1 given theta0.
 Prob_y1 <- function(y1, n1, theta) {
   choose(n1, y1) * (theta ^ y1) * (1 - theta) ^ (n1 - y1) 
 }
 
-
+# Function to calculate the expected sample size given a pair of tuning parameters.
 Expected_N <- function(x, n1, n2, theta) {
   gamma <- x[1]
   lambda <- x[2]
   
-  # Threshold to determing progression, based on the decision
+  # Threshold to determine progression, based on the decision
   # rule.
   C1 <- 1 - lambda * (n1 / n2) ^ gamma
   
@@ -112,11 +105,15 @@ Expected_N <- function(x, n1, n2, theta) {
   sum(n1 * stops * y_1_probs + n2 * (!stops) * y_1_probs)
 }
 
+# Calculate the expected sample size for each acceptable pair (lambda, gamma).
 Sample_Size <- apply(df_acceptable_pairs, 1, Expected_N, n1 = 40, n2 = 80, theta = 0.5)
 
+# Round each sample size to minimum feasible.
 Round_Up <- ceiling(Sample_Size)
 
+#Calculate the power for each acceptable pair to allow comparisons between those
+# with the same expected sample size.
 Power <- apply(df_acceptable_pairs, 1, Errors_General, a0 = 0.5, b0 = 0.5, n1 = 40, n2 = 80, theta = 0.70)
 
+# View a table with the acceptable pairs, their expected sample size and the power.
 Full_Data <- cbind(df_acceptable_pairs, Round_Up, Power)
-
