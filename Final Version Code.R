@@ -7,6 +7,8 @@ Sample_Size <- function(alpha, beta, delta, theta) {
   return(n)
 }
 
+# Sample_Size(0.05, 0.2, 0.2, 0.5)
+
 # This gives an estimated sample size for the first arm as n1 = 40
 
 
@@ -136,8 +138,8 @@ gridsearch <- function(x, n1, n2, theta, a0, b0) {
   # # Threshold of determine progression, based on the decision rule.
   # C1 <-  1 - lambda * (n1 / n2) ^ gamma
   # 
-  # # Return number of simulations where threshold is exceeded for stage 1.
-  # M2 <- sum(fut1 < C1)
+  # # Return number of simulations where threshold is not exceeded for stage 1.
+  # M2 <- sum(fut1 <= C1)
   # 
   # # Simulate the number of successes for stage 2 given stage 1 was
   # # successful.
