@@ -52,12 +52,11 @@ Errors_General <- function(x, a0, b0, n1, n2, theta) {
 }
   
 
-
 # Create a data frame of all possible pairs of gamma and lambda to be considered.
 # We have restricted both to [0, 1].
 gamma <- seq(0.01, 1, 0.05)
 lambda <- seq(0.01, 1, 0.05)
-df <- expand.grid(gamma = gamma, lambda = lambda)
+df <- expand.grid(lambda = lambda, gamma = gamma)
 
 
 ptm <- proc.time()
