@@ -1,6 +1,8 @@
-# FINAL FINAL VERSION CODE
+# Code to accompany an evaluation of the BOP2 trial design.
 
-# Initial calculation of one stage sample size
+
+
+# Initial calculation of one stage sample size.
 Sample_Size <- function(alpha, beta, delta, theta) {
   n <- (qnorm(1 - alpha) - qnorm(beta))^2 * theta * (1 - theta) / delta ^ 2
   return(n)
@@ -48,6 +50,8 @@ Errors_General <- function(x, a0, b0, n1, n2, theta) {
   # Threshold to determine progression, based on the decision rule.
   C2 <-  1 - lambda * (n2 / n2) ^ gamma
   
+  # Type one error when generated under the null hypothesis.
+  # Type two error when generated under the alternate hypothesis.
   return(sum(fut1 <= C1 & fut2 <= C2) / M1)
 }
   
@@ -83,7 +87,7 @@ Prob_y1 <- function(y1, n1, theta) {
   choose(n1, y1) * (theta ^ y1) * (1 - theta) ^ (n1 - y1) 
 }
 
-# Function to calculate the expected sample size given a pair of tuning parameters.
+# Function to calculate the expected sample size given a pair of decision rule parameters.
 Expected_N <- function(x, n1, n2, theta) {
   gamma <- x[1]
   lambda <- x[2]
